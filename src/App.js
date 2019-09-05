@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Selection from "./components/Selection";
+import ShowQuiz from "./components/ShowQuiz";
+import getQuestions from "./apis/trivia";
+import categoryCode from "./utils/categoryCode";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = { isVisible: true, questions: [] };
+
+  handleStart = data => {
+    const category = categoryCode(data.category);
+    const difficulty = data.difficulty.toLowerCase();
+    getQuestions(category, difficulty)
+      .then(response => this.setState({ questions: response }))
+      .catch(err => console.log(err));
+    this.setState(prevState => ({ isVisible: !prevState.isVisible }));
+  };
+
+  render() {
+    return (
+      <div className="container text-center">
+        <h1 className="display-3">TRIVIA X</h1>
+        <p>Created by Carlo Anselmi</p>
+
+        {this.state.isVisible ? (
+          <Selection handleStart={this.handleStart} />
+        ) : (
+          <ShowQuiz questions={this.state.questions} />
+        )}
+      </div>
+    );
+  }
 }
 
 export default App;
