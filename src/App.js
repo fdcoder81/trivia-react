@@ -5,13 +5,22 @@ import getQuestions from "./apis/trivia";
 import categoryCode from "./utils/categoryCode";
 
 class App extends React.Component {
-  state = { isVisible: true, questions: [] };
+  state = {
+    isVisible: true,
+    questions: [],
+    count: 0,
+    score: 0
+  };
 
   handleStart = data => {
     const category = categoryCode(data.category);
     const difficulty = data.difficulty.toLowerCase();
     getQuestions(category, difficulty)
-      .then(response => this.setState({ questions: response }))
+      .then(response =>
+        this.setState({
+          questions: response
+        })
+      )
       .catch(err => console.log(err));
     this.setState(prevState => ({ isVisible: !prevState.isVisible }));
   };
@@ -33,3 +42,8 @@ class App extends React.Component {
 }
 
 export default App;
+
+/* array = array
+        .map(a => [Math.random(), a])
+        .sort((a, b) => a[0] - b[0])
+        .map(a => a[1]); */

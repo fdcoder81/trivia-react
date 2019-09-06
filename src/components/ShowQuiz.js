@@ -2,20 +2,17 @@ import React from "react";
 import he from "he";
 
 class ShowQuiz extends React.Component {
-  state = { questions: [], count: 0 };
+  state = { count: 0 };
 
-  componentDidUpdate() {
-    if (this.props.questions !== this.state.questions) {
-      this.setState({ questions: this.props.questions });
-    }
-  }
-
-  nextQuestion = () => {
-    this.setState(prevstate => ({ count: prevstate.count + 1 }));
+  handleNext = () => {
+    this.setState(prevState => ({ count: prevState.count + 1 }));
   };
 
   render() {
-    if (!this.state.questions.length) {
+    let questions = this.props.questions;
+    console.log(questions);
+
+    if (!questions.length) {
       return (
         <div>
           <div className="d-flex justify-content-center">
@@ -30,7 +27,7 @@ class ShowQuiz extends React.Component {
         </div>
       );
     } else {
-      let currentQuestion = this.state.questions[this.state.count];
+      let currentQuestion = questions[this.state.count];
       let temporaryAnswers = [];
       let currentAnswers = [];
       let correctAnswer;
@@ -52,16 +49,32 @@ class ShowQuiz extends React.Component {
       ));
 
       return (
-        <div>
+        <div className="my-4">
           <div
-            className="alert alert-primary w-50 mx-auto"
-            style={{ fontSize: "2rem" }}
+            className="alert alert-primary"
+            style={{ fontSize: "2rem", marginTop: "4rem" }}
             role="alert"
           >
             {he.decode(currentQuestion.question)}
           </div>
-          {answerButton}
-          <button onClick={this.nextQuestion}>Next Question</button>
+
+          <div style={{ paddingTop: "4rem" }}>{answerButton}</div>
+
+          <div className="d-flex justify-content-center my-4">
+            <div className="alert alert-info mr-4" role="alert">
+              Question : 0 / {questions.length}
+            </div>
+            <div className="alert alert-dark ml-4" role="alert">
+              Score : 0
+            </div>
+            <button
+              onClick={this.handleNext}
+              type="button"
+              className="btn btn-primary btn-lg"
+            >
+              NEXT QUESTION
+            </button>
+          </div>
         </div>
       );
     }
