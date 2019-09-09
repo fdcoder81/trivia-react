@@ -10,8 +10,21 @@ class ShowQuiz extends React.Component {
     correctAnswer: ""
   };
 
+  divRef = React.createRef();
+
   handleNext = () => {
     this.setState(prevState => ({ count: prevState.count + 1 }));
+    console.log(this.divRef);
+    this.divRef.current.childNodes.forEach(e => {
+      console.log(e.classList);
+      if (
+        e.classList.contains("btn-success") ||
+        e.classList.contains("btn-danger")
+      ) {
+        e.classList.replace("btn-success", "btn-primary");
+        e.classList.replace("btn-danger", "btn-primary");
+      }
+    });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -40,14 +53,26 @@ class ShowQuiz extends React.Component {
     currentAnswers = temporaryAnswers.flat(2);
     correctAnswer = currentAnswers[0];
 
+    currentAnswers = currentAnswers
+      .map(a => [Math.random(), a])
+      .sort((a, b) => a[0] - b[0])
+      .map(a => a[1]);
+
     this.setState({ currentAnswers });
     this.setState({ correctAnswer });
   };
 
-  /* handleAnswer = e => {
+  handleAnswer = e => {
+    console.log(this.state.currentAnswers);
     console.log(e.target.textContent);
-    console.log(questions);
-  }; */
+    console.log(this.state.correctAnswer);
+    if (e.target.textContent === this.state.correctAnswer) {
+      e.target.classList.replace("btn-primary", "btn-success");
+      this.setState(prevState => ({ score: prevState.score + 1 }));
+    } else {
+      e.target.classList.replace("btn-primary", "btn-danger");
+    }
+  };
 
   render() {
     if (!this.state.questions.length) {
@@ -72,7 +97,7 @@ class ShowQuiz extends React.Component {
         <button
           onClick={this.handleAnswer}
           type="button"
-          className="btn btn-primary btn-lg"
+          className="btn btn-primary btn-lg m-4"
         >
           {he.decode(answer)}
         </button>
@@ -88,7 +113,9 @@ class ShowQuiz extends React.Component {
             {he.decode(this.state.questions[this.state.count].question)}
           </div>
 
-          <div style={{ paddingTop: "4rem" }}>{answerButton}</div>
+          <div ref={this.divRef} style={{ paddingTop: "4rem" }}>
+            {answerButton}
+          </div>
 
           <div className="d-flex justify-content-center my-4">
             <div className="alert alert-info mr-4" role="alert">
@@ -112,18 +139,3 @@ class ShowQuiz extends React.Component {
 }
 
 export default ShowQuiz;
-
-/* let currentQuestion = questions[this.state.count];
-      let temporaryAnswers = [];
-      let currentAnswers = [];
-      let correctAnswer;
-
-      console.log(currentQuestion);
-
-      for (const key in currentQuestion) {
-        if (key === "correct_answer" || key === "incorrect_answers") {
-          temporaryAnswers.push(currentQuestion[key]);
-        }
-      }
-      currentAnswers = temporaryAnswers.flat(2);
-      console.log(currentAnswers); */
