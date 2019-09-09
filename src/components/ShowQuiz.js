@@ -15,8 +15,8 @@ class ShowQuiz extends React.Component {
   handleNext = () => {
     this.setState(prevState => ({ count: prevState.count + 1 }));
     console.log(this.divRef);
+    this.enableButtons();
     this.divRef.current.childNodes.forEach(e => {
-      console.log(e.classList);
       if (
         e.classList.contains("btn-success") ||
         e.classList.contains("btn-danger")
@@ -63,15 +63,25 @@ class ShowQuiz extends React.Component {
   };
 
   handleAnswer = e => {
-    console.log(this.state.currentAnswers);
-    console.log(e.target.textContent);
-    console.log(this.state.correctAnswer);
     if (e.target.textContent === this.state.correctAnswer) {
       e.target.classList.replace("btn-primary", "btn-success");
       this.setState(prevState => ({ score: prevState.score + 1 }));
     } else {
       e.target.classList.replace("btn-primary", "btn-danger");
     }
+    this.disableButtons();
+  };
+
+  disableButtons = () => {
+    this.divRef.current.childNodes.forEach(e => {
+      e.setAttribute("disabled", "disabled");
+    });
+  };
+
+  enableButtons = () => {
+    this.divRef.current.childNodes.forEach(e => {
+      e.removeAttribute("disabled");
+    });
   };
 
   render() {
