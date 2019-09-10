@@ -2,5 +2,5 @@
 
 ## Built with React
 
-A simple Trivia, built using React.
+A simple Trivia game quiz, built using React.
 Fetching data from ( https://opentdb.com )
