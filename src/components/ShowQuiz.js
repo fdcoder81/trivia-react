@@ -7,14 +7,18 @@ class ShowQuiz extends React.Component {
     score: 0,
     questions: [],
     currentAnswers: [],
-    correctAnswer: ""
+    correctAnswer: "",
+    isNextVisible: false,
+    isCorrect: null,
+    endGame: false
   };
 
   divRef = React.createRef();
 
   handleNext = () => {
-    this.setState(prevState => ({ count: prevState.count + 1 }));
-    console.log(this.divRef);
+    this.setState({ isCorrect: null });
+    this.setState(prevState => ({ isNextVisible: !prevState.isNextVisible }));
+
     this.enableButtons();
     this.divRef.current.childNodes.forEach(e => {
       if (
@@ -25,6 +29,13 @@ class ShowQuiz extends React.Component {
         e.classList.replace("btn-danger", "btn-primary");
       }
     });
+
+    if (this.state.count < 9) {
+      this.setState(prevState => ({ count: prevState.count + 1 }));
+    } else {
+      this.disableButtons();
+      this.setState(prevState => ({ endGame: !prevState.endGame }));
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -66,10 +77,13 @@ class ShowQuiz extends React.Component {
     if (e.target.textContent === this.state.correctAnswer) {
       e.target.classList.replace("btn-primary", "btn-success");
       this.setState(prevState => ({ score: prevState.score + 1 }));
+      this.setState({ isCorrect: true });
     } else {
       e.target.classList.replace("btn-primary", "btn-danger");
+      this.setState({ isCorrect: false });
     }
     this.disableButtons();
+    this.setState(prevState => ({ isNextVisible: !prevState.isNextVisible }));
   };
 
   disableButtons = () => {
@@ -103,8 +117,9 @@ class ShowQuiz extends React.Component {
         </div>
       );
     } else {
-      let answerButton = this.state.currentAnswers.map(answer => (
+      let answerButton = this.state.currentAnswers.map((answer, index) => (
         <button
+          key={index}
           onClick={this.handleAnswer}
           type="button"
           className="btn btn-primary btn-lg m-4"
@@ -112,6 +127,27 @@ class ShowQuiz extends React.Component {
           {he.decode(answer)}
         </button>
       ));
+
+      let infoAlert;
+      if (this.state.isCorrect === true) {
+        infoAlert = (
+          <div
+            className="alert alert-warning font-weight-bold ml-4"
+            role="alert"
+          >
+            Correct!
+          </div>
+        );
+      } else if (this.state.isCorrect === false) {
+        infoAlert = (
+          <div
+            className="alert alert-warning font-weight-bold ml-4"
+            role="alert"
+          >
+            Wrong
+          </div>
+        );
+      }
 
       return (
         <div className="my-4">
@@ -132,16 +168,38 @@ class ShowQuiz extends React.Component {
               Question : {this.state.count + 1} / {this.state.questions.length}
             </div>
             <div className="alert alert-dark ml-4" role="alert">
-              Score : {this.state.score}
+              Score : {this.state.score}{" "}
             </div>
+            {infoAlert}
           </div>
-          <button
-            onClick={this.handleNext}
-            type="button"
-            className="btn btn-primary btn-lg"
-          >
-            NEXT QUESTION
-          </button>
+
+          {this.state.isNextVisible ? (
+            <button
+              onClick={this.handleNext}
+              type="button"
+              className="btn btn-primary btn-lg"
+            >
+              NEXT QUESTION
+            </button>
+          ) : null}
+
+          {this.state.endGame ? (
+            <div
+              style={{ top: "50%" }}
+              className="alert alert-success position-absolute fixed-top w-25 mx-auto"
+              role="alert"
+            >
+              <h2 className="alert-heading mt-4">Quiz done!</h2>
+              <h4 className="my-4">Your score : {this.state.score}</h4>
+              <button
+                onClick={this.props.newGame}
+                type="button"
+                className="btn btn-primary btn-lg my-4"
+              >
+                NEW GAME
+              </button>
+            </div>
+          ) : null}
         </div>
       );
     }

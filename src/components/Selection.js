@@ -11,8 +11,9 @@ class Selection extends React.Component {
     const categories = ["Mix", "Sports", "History", "Movies", "Geography"];
     const difficulty = ["Easy", "Medium", "Hard"];
 
-    const categoryButton = categories.map(category => (
+    const categoryButton = categories.map((category, index) => (
       <button
+        key={index}
         type="button"
         className={`list-group-item list-group-item-action ${
           this.state.category === category ? "active" : ""
@@ -23,8 +24,9 @@ class Selection extends React.Component {
       </button>
     ));
 
-    const difficultyButton = difficulty.map(difficulty => (
+    const difficultyButton = difficulty.map((difficulty, index) => (
       <button
+        key={index}
         type="button"
         className={`list-group-item list-group-item-action ${
           this.state.difficulty === difficulty ? "active" : ""

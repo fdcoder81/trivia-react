@@ -12,6 +12,10 @@ class App extends React.Component {
     score: 0
   };
 
+  newGame = () => {
+    this.setState(prevState => ({ isVisible: !prevState.isVisible }));
+  };
+
   handleStart = data => {
     const category = categoryCode(data.category);
     const difficulty = data.difficulty.toLowerCase();
@@ -34,7 +38,7 @@ class App extends React.Component {
         {this.state.isVisible ? (
           <Selection handleStart={this.handleStart} />
         ) : (
-          <ShowQuiz questions={this.state.questions} />
+          <ShowQuiz questions={this.state.questions} newGame={this.newGame} />
         )}
       </div>
     );
