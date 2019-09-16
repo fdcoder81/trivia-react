@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/trivia-react/static/css/main.34de6062.chunk.css",
-    "main.js": "/trivia-react/static/js/main.d18922e4.chunk.js",
-    "main.js.map": "/trivia-react/static/js/main.d18922e4.chunk.js.map",
+    "main.js": "/trivia-react/static/js/main.5de0be91.chunk.js",
+    "main.js.map": "/trivia-react/static/js/main.5de0be91.chunk.js.map",
     "runtime~main.js": "/trivia-react/static/js/runtime~main.61261efa.js",
     "runtime~main.js.map": "/trivia-react/static/js/runtime~main.61261efa.js.map",
     "static/css/2.22a7d4ef.chunk.css": "/trivia-react/static/css/2.22a7d4ef.chunk.css",
     "static/js/2.b6970e26.chunk.js": "/trivia-react/static/js/2.b6970e26.chunk.js",
     "static/js/2.b6970e26.chunk.js.map": "/trivia-react/static/js/2.b6970e26.chunk.js.map",
     "index.html": "/trivia-react/index.html",
-    "precache-manifest.cd8eebb25b1ffdcdb2289f77721c4210.js": "/trivia-react/precache-manifest.cd8eebb25b1ffdcdb2289f77721c4210.js",
+    "precache-manifest.356f88d8b66fadb2b73227e3748600cc.js": "/trivia-react/precache-manifest.356f88d8b66fadb2b73227e3748600cc.js",
     "service-worker.js": "/trivia-react/service-worker.js",
     "static/css/2.22a7d4ef.chunk.css.map": "/trivia-react/static/css/2.22a7d4ef.chunk.css.map",
     "static/css/main.34de6062.chunk.css.map": "/trivia-react/static/css/main.34de6062.chunk.css.map"
