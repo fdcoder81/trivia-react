@@ -122,7 +122,7 @@ class ShowQuiz extends React.Component {
           key={index}
           onClick={this.handleAnswer}
           type="button"
-          className="btn btn-primary btn-lg m-4"
+          className="btn btn-primary btn-lg m-2"
         >
           {he.decode(answer)}
         </button>
@@ -150,24 +150,20 @@ class ShowQuiz extends React.Component {
       }
 
       return (
-        <div className="my-4">
-          <div
-            className="alert alert-primary"
-            style={{ fontSize: "2rem", marginTop: "4rem" }}
-            role="alert"
-          >
+        <div className="my-2">
+          <div className="alert alert-primary questions-title" role="alert">
             {he.decode(this.state.questions[this.state.count].question)}
           </div>
 
-          <div ref={this.divRef} style={{ paddingTop: "4rem" }}>
+          <div className="answer-button" ref={this.divRef}>
             {answerButton}
           </div>
 
           <div className="d-flex justify-content-center my-4">
-            <div className="alert alert-info mr-4" role="alert">
+            <div className="alert alert-info mr-2" role="alert">
               Question : {this.state.count + 1} / {this.state.questions.length}
             </div>
-            <div className="alert alert-dark ml-4" role="alert">
+            <div className="alert alert-dark ml-2" role="alert">
               Score : {this.state.score}{" "}
             </div>
             {infoAlert}

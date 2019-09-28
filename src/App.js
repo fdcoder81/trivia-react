@@ -32,7 +32,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="container text-center">
-        <h1 className="display-3">TRIVIA QUIZ</h1>
+        <h1>TRIVIA QUIZ</h1>
         <p>Created by Carlo Anselmi</p>
 
         {this.state.isVisible ? (

@@ -40,14 +40,14 @@ class Selection extends React.Component {
     return (
       <div className="border rounded w-75 mx-auto">
         <div className="row pt-4">
-          <div className="col-6">
-            <div className="list-group w-75 ml-auto">
+          <div className="col-md-6">
+            <div className="list-group w-75 mx-auto">
               <p>Choose a category</p>
               {categoryButton}
             </div>
           </div>
-          <div className="col-6">
-            <div className="list-group w-50 mr-auto">
+          <div className="col-md-6">
+            <div className="list-group w-50 mx-auto margin-top">
               <p>Choose the difficulty</p>
               {difficultyButton}
             </div>
